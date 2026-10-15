@@ -4,6 +4,8 @@
  */
 package stocktradingplatform;
 
+import stocktradingplatform.db.DataBase;
+
 /**
  *
  * @author Administrator
@@ -15,6 +17,16 @@ public class StockTradingPlatform {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+
+        DataBase db = new DataBase();
+
+        try {
+            db.getCon();
+            System.out.println("Database Connected");
+        } catch (Exception e) {
+            System.out.println("Not Connected");
+        }
+
     }
-    
+
 }
