@@ -4,6 +4,8 @@
  */
 package stocktradingplatform.models;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Administrator
@@ -21,6 +23,8 @@ public class Transaction {
     private Double unitPrice;
 
     private Double totalPrice;
+
+    final private LocalDateTime createdAt = LocalDateTime.now();
 
     public Long getId() {
         return id;

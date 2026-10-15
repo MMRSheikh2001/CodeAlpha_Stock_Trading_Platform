@@ -56,6 +56,10 @@ public class User {
         return isAdmin;
     }
 
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
     public Boolean canAfford(Double amount) {
 
         return (this.cashBalance - amount) >= 0;
