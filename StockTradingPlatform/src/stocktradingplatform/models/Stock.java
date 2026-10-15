@@ -14,9 +14,9 @@ public class Stock {
 
     private String companyName;
 
-    private String quantity;
+    private Long quantity;
 
-    private String currentPrice;
+    private Double currentPrice;
 
     public Long getId() {
         return id;
@@ -34,19 +34,19 @@ public class Stock {
         this.companyName = companyName;
     }
 
-    public String getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 
-    public String getCurrentPrice() {
+    public Double getCurrentPrice() {
         return currentPrice;
     }
 
-    public void setCurrentPrice(String currentPrice) {
+    public void setCurrentPrice(Double currentPrice) {
         this.currentPrice = currentPrice;
     }
 
