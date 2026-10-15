@@ -10,19 +10,13 @@ package stocktradingplatform.models;
  */
 public class Holding {
 
-   
+    private Long userId;
 
     private Long stockId;
-
-    private Long userId;
 
     private Long quantity;
 
     private Double averageBuyPrice;
-
-   
-
-   
 
     public Long getStockId() {
         return stockId;

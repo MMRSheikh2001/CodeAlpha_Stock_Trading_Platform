@@ -16,7 +16,7 @@ public class User {
 
     private String password;
 
-    private String cashBalance;
+    private Double cashBalance;
 
     private Boolean isAdmin = false;
 
@@ -44,16 +44,22 @@ public class User {
         this.password = password;
     }
 
-    public String getCashBalance() {
+    public Double getCashBalance() {
         return cashBalance;
     }
 
-    public void setCashBalance(String cashBalance) {
+    public void setCashBalance(Double cashBalance) {
         this.cashBalance = cashBalance;
     }
 
     public Boolean getIsAdmin() {
         return isAdmin;
+    }
+
+    public Boolean canAfford(Double amount) {
+
+        return (this.cashBalance - amount) >= 0;
+
     }
 
 }
