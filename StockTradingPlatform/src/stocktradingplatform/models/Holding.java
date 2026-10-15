@@ -9,5 +9,45 @@ package stocktradingplatform.models;
  * @author Administrator
  */
 public class Holding {
-    
+
+    private Long id;
+
+    private Long stockId;
+
+    private Long userId;
+
+    private Double averageBuyPrice;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getStockId() {
+        return stockId;
+    }
+
+    public void setStockId(Long stockId) {
+        this.stockId = stockId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Double getAverageBuyPrice() {
+        return averageBuyPrice;
+    }
+
+    public void setAverageBuyPrice(Double averageBuyPrice) {
+        this.averageBuyPrice = averageBuyPrice;
+    }
+
 }
