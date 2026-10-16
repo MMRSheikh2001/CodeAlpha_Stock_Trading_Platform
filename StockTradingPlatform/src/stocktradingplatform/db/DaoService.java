@@ -12,13 +12,13 @@ import java.util.List;
  */
 public interface DaoService<E> {
 
-    E save(E e);
+    void save(E e);
 
     E findById(Long id);
 
     List<E> findAll();
 
-    E update(E e);
+    void update(E e);
 
     void delete(Long id);
 
