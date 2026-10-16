@@ -46,6 +46,39 @@ public class UserDao implements DaoService<User> {
 
     }
 
+    public User findByUserName(String userName) {
+
+        sql = "select * from users where userName = ?";
+        User user = null;
+
+        try {
+            ps = db.getCon().prepareStatement(sql);
+
+            ps.setString(1, userName);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                user = new User();
+                user.setId(rs.getLong("id"));
+                user.setUserName(rs.getString("userName"));
+                user.setPassword(rs.getString("password"));
+                user.setCashBalance(rs.getDouble("cashBalance"));
+                user.setIsAdmin(rs.getInt("isAdmin") == 1);
+            }
+
+            rs.close();
+            ps.close();
+            db.getCon().close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return user;
+
+    }
+
     @Override
     public void save(User e) {
 

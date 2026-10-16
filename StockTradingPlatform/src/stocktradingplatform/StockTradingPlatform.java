@@ -22,20 +22,21 @@ public class StockTradingPlatform {
 
         UserDao userDao = new UserDao();
 
-        User user = new User();
+//        User user = new User();
 
-        user.setUserName("admin");
-        user.setPassword("1234");
+//        user.setUserName("admin");
+//        user.setPassword("1234");
+//
+//        user.setIsAdmin(true);
+//
+//        userDao.createTable();
 
-        user.setIsAdmin(true);
+//        userDao.save(user);
 
-        userDao.createTable();
+        User admin = userDao.findByUserName("admin");
 
-        userDao.save(user);
-
-        User admin = userDao.findById(1l);
-
-        System.out.println("Name : " + admin.getUserName() + " Balance : " + admin.getCashBalance());
+        System.out.println("Name : " + admin.getUserName() + " Balance : " + admin.getCashBalance()+
+                "\n password : "+ admin.getPassword());
 
     }
 
