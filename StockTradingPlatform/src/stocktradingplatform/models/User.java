@@ -16,7 +16,7 @@ public class User {
 
     private String password;
 
-    private Double cashBalance;
+    private Double cashBalance = 0.0;
 
     private Boolean isAdmin = false;
 

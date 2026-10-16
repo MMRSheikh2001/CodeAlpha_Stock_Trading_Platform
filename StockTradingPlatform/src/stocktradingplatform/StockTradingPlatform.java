@@ -5,6 +5,8 @@
 package stocktradingplatform;
 
 import stocktradingplatform.db.DataBase;
+import stocktradingplatform.db.UserDao;
+import stocktradingplatform.models.User;
 
 /**
  *
@@ -18,14 +20,22 @@ public class StockTradingPlatform {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        DataBase db = new DataBase();
+        UserDao userDao = new UserDao();
 
-        try {
-            db.getCon();
-            System.out.println("Database Connected");
-        } catch (Exception e) {
-            System.out.println("Not Connected");
-        }
+        User user = new User();
+
+        user.setUserName("admin");
+        user.setPassword("1234");
+
+        user.setIsAdmin(true);
+
+        userDao.createTable();
+
+        userDao.save(user);
+
+        User admin = userDao.findById(1l);
+
+        System.out.println("Name : " + admin.getUserName() + " Balance : " + admin.getCashBalance());
 
     }
 
