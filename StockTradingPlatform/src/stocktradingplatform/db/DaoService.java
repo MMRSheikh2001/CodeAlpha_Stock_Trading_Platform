@@ -20,6 +20,6 @@ public interface DaoService<E> {
 
     void update(E e);
 
-    void delete(Long id);
+   
 
 }

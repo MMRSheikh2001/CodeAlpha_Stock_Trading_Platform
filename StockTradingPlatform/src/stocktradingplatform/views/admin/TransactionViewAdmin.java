@@ -15,6 +15,7 @@ public class TransactionViewAdmin extends javax.swing.JFrame {
      */
     public TransactionViewAdmin() {
         initComponents();
+           setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**

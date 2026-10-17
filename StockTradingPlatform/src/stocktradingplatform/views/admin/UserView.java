@@ -4,17 +4,24 @@
  */
 package stocktradingplatform.views.admin;
 
+import javax.swing.JOptionPane;
+import stocktradingplatform.db.UserDao;
+import stocktradingplatform.models.User;
+
 /**
  *
  * @author Administrator
  */
 public class UserView extends javax.swing.JFrame {
 
+    UserDao userDao = new UserDao();
+
     /**
      * Creates new form UserView
      */
     public UserView() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -26,21 +33,151 @@ public class UserView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JTextField();
+        txtUserName = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        btnSaveUser = new javax.swing.JButton();
+        btnResetUser = new javax.swing.JButton();
+        btnUpdateUser = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblShowUsers = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("User Panel");
+
+        jLabel2.setText("User Name");
+
+        jLabel3.setText("Password");
+
+        btnSaveUser.setBackground(new java.awt.Color(51, 153, 0));
+        btnSaveUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSaveUser.setText("Save");
+        btnSaveUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSaveUserMouseClicked(evt);
+            }
+        });
+
+        btnResetUser.setBackground(new java.awt.Color(255, 255, 0));
+        btnResetUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnResetUser.setText("Reset");
+
+        btnUpdateUser.setBackground(new java.awt.Color(0, 255, 255));
+        btnUpdateUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUpdateUser.setText("Update");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnSaveUser)
+                        .addGap(51, 51, 51)
+                        .addComponent(btnResetUser)
+                        .addGap(93, 93, 93)
+                        .addComponent(btnUpdateUser)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSaveUser)
+                    .addComponent(btnResetUser)
+                    .addComponent(btnUpdateUser))
+                .addGap(41, 41, 41))
+        );
+
+        tblShowUsers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblShowUsers);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(166, 166, 166)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSaveUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveUserMouseClicked
+        // TODO add your handling code here:
+
+        String userName = txtUserName.getText().trim().toLowerCase();
+        String password = txtPassword.getText().trim();
+
+        if (userName.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Give valid User Name and Password");
+            return;
+
+        }
+        User user = new User();
+        user.setUserName(userName);
+        user.setPassword(password);
+
+        userDao.save(user);
+
+        clearData();
+
+    }//GEN-LAST:event_btnSaveUserMouseClicked
+
+    private void clearData() {
+        txtUserName.setText("");
+        txtPassword.setText("");
+
+    }
 
     /**
      * @param args the command line arguments
@@ -78,5 +215,16 @@ public class UserView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnResetUser;
+    private javax.swing.JButton btnSaveUser;
+    private javax.swing.JButton btnUpdateUser;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblShowUsers;
+    private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }

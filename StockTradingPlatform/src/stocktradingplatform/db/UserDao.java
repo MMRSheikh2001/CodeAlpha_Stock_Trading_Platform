@@ -78,14 +78,31 @@ public class UserDao implements DaoService<User> {
         return user;
 
     }
-    
-    
-    public int countUsers(){
-    
-        sql="select count(*) from users";
-        
-        
-    
+
+    public int countUsers() {
+
+        sql = "select count(*) from users";
+
+        int count = 0;
+
+        try {
+            ps = db.getCon().prepareStatement(sql);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+            rs.close();
+            ps.close();
+            db.getCon().close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return count;
+
     }
 
     @Override
@@ -194,25 +211,6 @@ public class UserDao implements DaoService<User> {
             ps.close();
             db.getCon().close();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    @Override
-    public void delete(Long id) {
-
-        sql = "delete from users where id = ?";
-
-        try {
-            ps = db.getCon().prepareStatement(sql);
-
-            ps.setLong(1, id);
-            ps.executeUpdate();
-
-            ps.close();
-            db.getCon().close();
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }

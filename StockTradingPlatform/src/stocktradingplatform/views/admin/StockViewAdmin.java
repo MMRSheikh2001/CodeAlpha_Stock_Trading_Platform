@@ -15,6 +15,7 @@ public class StockViewAdmin extends javax.swing.JFrame {
      */
     public StockViewAdmin() {
         initComponents();
+           setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**

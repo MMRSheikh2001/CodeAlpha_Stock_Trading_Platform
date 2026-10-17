@@ -4,6 +4,7 @@
  */
 package stocktradingplatform.views;
 
+import stocktradingplatform.db.UserDao;
 import stocktradingplatform.views.admin.HoldingViewAdmin;
 import stocktradingplatform.views.admin.StockViewAdmin;
 import stocktradingplatform.views.admin.TransactionViewAdmin;
@@ -15,11 +16,14 @@ import stocktradingplatform.views.admin.UserView;
  */
 public class AdminDashboard extends javax.swing.JFrame {
 
+    UserDao userDao = new UserDao();
+
     /**
      * Creates new form AdminDashboard
      */
     public AdminDashboard() {
         initComponents();
+        txtTotalUsers.setText(userDao.countUsers() + "");
     }
 
     /**
@@ -44,6 +48,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         btnStocks = new javax.swing.JButton();
         btnTransactions = new javax.swing.JButton();
         btnUsers = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,6 +118,15 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnLogout.setBackground(new java.awt.Color(255, 0, 0));
+        btnLogout.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnLogout.setText("Logout");
+        btnLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLogoutMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,6 +164,10 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(110, 110, 110))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogout)
+                .addGap(259, 259, 259))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,7 +198,9 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnHoldings, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(55, 55, 55))
+                .addGap(18, 18, 18)
+                .addComponent(btnLogout)
+                .addGap(14, 14, 14))
         );
 
         pack();
@@ -201,7 +221,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         UserView uv = new UserView();
 
         uv.setVisible(true);
-        this.dispose();
 
 
     }//GEN-LAST:event_btnUsersMouseClicked
@@ -211,7 +230,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         StockViewAdmin sva = new StockViewAdmin();
 
         sva.setVisible(true);
-        this.dispose();
 
 
     }//GEN-LAST:event_btnStocksMouseClicked
@@ -222,8 +240,6 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         hva.setVisible(true);
 
-        this.dispose();
-
 
     }//GEN-LAST:event_btnHoldingsMouseClicked
 
@@ -233,10 +249,16 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         tva.setVisible(true);
 
-        this.dispose();
-
 
     }//GEN-LAST:event_btnTransactionsMouseClicked
+
+    private void btnLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseClicked
+        // TODO add your handling code here:
+
+        LoginView lv = new LoginView();
+        lv.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnLogoutMouseClicked
 
     /**
      * @param args the command line arguments
@@ -275,6 +297,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHoldings;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnStocks;
     private javax.swing.JButton btnTransactions;
     private javax.swing.JButton btnUsers;

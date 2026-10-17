@@ -15,6 +15,7 @@ public class HoldingViewAdmin extends javax.swing.JFrame {
      */
     public HoldingViewAdmin() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
