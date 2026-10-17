@@ -78,6 +78,15 @@ public class UserDao implements DaoService<User> {
         return user;
 
     }
+    
+    
+    public int countUsers(){
+    
+        sql="select count(*) from users";
+        
+        
+    
+    }
 
     @Override
     public void save(User e) {
