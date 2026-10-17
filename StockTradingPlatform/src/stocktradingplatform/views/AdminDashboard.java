@@ -4,6 +4,11 @@
  */
 package stocktradingplatform.views;
 
+import stocktradingplatform.views.admin.HoldingViewAdmin;
+import stocktradingplatform.views.admin.StockViewAdmin;
+import stocktradingplatform.views.admin.TransactionViewAdmin;
+import stocktradingplatform.views.admin.UserView;
+
 /**
  *
  * @author Administrator
@@ -26,22 +31,212 @@ public class AdminDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtTotalUsers = new javax.swing.JTextField();
+        txtTotalTransactions = new javax.swing.JTextField();
+        txtTotalStocks = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtTotalHoldings = new javax.swing.JTextField();
+        btnHoldings = new javax.swing.JButton();
+        btnStocks = new javax.swing.JButton();
+        btnTransactions = new javax.swing.JButton();
+        btnUsers = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Admin Dashboard");
+
+        jLabel2.setText("Total Users");
+
+        txtTotalUsers.setEditable(false);
+
+        txtTotalTransactions.setEditable(false);
+
+        txtTotalStocks.setEditable(false);
+        txtTotalStocks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalStocksActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Total Stocks");
+
+        jLabel4.setText("Total Transactions");
+
+        jLabel5.setText("Total Holdings");
+
+        txtTotalHoldings.setEditable(false);
+        txtTotalHoldings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalHoldingsActionPerformed(evt);
+            }
+        });
+
+        btnHoldings.setBackground(new java.awt.Color(0, 255, 153));
+        btnHoldings.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnHoldings.setText("Holdings");
+        btnHoldings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnHoldingsMouseClicked(evt);
+            }
+        });
+
+        btnStocks.setBackground(new java.awt.Color(0, 204, 255));
+        btnStocks.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnStocks.setText("Stocks");
+        btnStocks.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnStocksMouseClicked(evt);
+            }
+        });
+
+        btnTransactions.setBackground(new java.awt.Color(0, 255, 102));
+        btnTransactions.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnTransactions.setText("Transactions");
+        btnTransactions.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTransactionsMouseClicked(evt);
+            }
+        });
+
+        btnUsers.setBackground(new java.awt.Color(0, 255, 255));
+        btnUsers.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnUsers.setText("Users");
+        btnUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUsersMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtTotalStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(69, 69, 69)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtTotalUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTotalTransactions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtTotalHoldings, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(107, 107, 107)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnHoldings, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                        .addComponent(btnTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(110, 110, 110))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtTotalUsers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTotalStocks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTotalTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtTotalHoldings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnStocks, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnHoldings, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtTotalStocksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalStocksActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalStocksActionPerformed
+
+    private void txtTotalHoldingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalHoldingsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalHoldingsActionPerformed
+
+    private void btnUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsersMouseClicked
+        // TODO add your handling code here:
+
+        UserView uv = new UserView();
+
+        uv.setVisible(true);
+        this.dispose();
+
+
+    }//GEN-LAST:event_btnUsersMouseClicked
+
+    private void btnStocksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStocksMouseClicked
+        // TODO add your handling code here:
+        StockViewAdmin sva = new StockViewAdmin();
+
+        sva.setVisible(true);
+        this.dispose();
+
+
+    }//GEN-LAST:event_btnStocksMouseClicked
+
+    private void btnHoldingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHoldingsMouseClicked
+        // TODO add your handling code here:
+        HoldingViewAdmin hva = new HoldingViewAdmin();
+
+        hva.setVisible(true);
+
+        this.dispose();
+
+
+    }//GEN-LAST:event_btnHoldingsMouseClicked
+
+    private void btnTransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTransactionsMouseClicked
+        // TODO add your handling code here:
+        TransactionViewAdmin tva = new TransactionViewAdmin();
+
+        tva.setVisible(true);
+
+        this.dispose();
+
+
+    }//GEN-LAST:event_btnTransactionsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -79,5 +274,18 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHoldings;
+    private javax.swing.JButton btnStocks;
+    private javax.swing.JButton btnTransactions;
+    private javax.swing.JButton btnUsers;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField txtTotalHoldings;
+    private javax.swing.JTextField txtTotalStocks;
+    private javax.swing.JTextField txtTotalTransactions;
+    private javax.swing.JTextField txtTotalUsers;
     // End of variables declaration//GEN-END:variables
 }
