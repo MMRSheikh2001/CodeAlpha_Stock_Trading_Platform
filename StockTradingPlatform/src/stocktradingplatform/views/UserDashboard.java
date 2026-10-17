@@ -4,17 +4,29 @@
  */
 package stocktradingplatform.views;
 
+import stocktradingplatform.models.User;
+
 /**
  *
  * @author Administrator
  */
 public class UserDashboard extends javax.swing.JFrame {
 
+    private User user;
+
     /**
      * Creates new form UserDashboard
      */
     public UserDashboard() {
         initComponents();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**

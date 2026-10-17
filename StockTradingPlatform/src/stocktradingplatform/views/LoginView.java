@@ -146,6 +146,7 @@ public class LoginView extends javax.swing.JFrame {
                 } else {
                     
                     UserDashboard ud = new UserDashboard();
+                    ud.setUser(user);
                     
                     ud.setVisible(true);
                     
