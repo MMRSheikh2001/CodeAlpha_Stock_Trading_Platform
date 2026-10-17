@@ -165,7 +165,7 @@ public class UserDao implements DaoService<User> {
     public List<User> findAll() {
 
         List<User> users = new ArrayList<>();
-        sql = "select * from users order by id";
+        sql = "select * from users where isAdmin==0 order by id";
 
         try {
             ps = db.getCon().prepareStatement(sql);

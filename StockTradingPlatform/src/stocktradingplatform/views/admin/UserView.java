@@ -219,6 +219,13 @@ public class UserView extends javax.swing.JFrame {
             user.setCashBalance(Double.valueOf(cashBalance));
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Give Proper Balance" + e);
+            return;
+        }
+
+        if (userDao.findByUserName(userName) != null) {
+            JOptionPane.showMessageDialog(null, "User Name Already exists");
+            return;
+
         }
 
         userDao.save(user);
@@ -276,10 +283,10 @@ public class UserView extends javax.swing.JFrame {
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, e);
-        } finally{
-        showUsers();
-        clearData();
-        
+        } finally {
+            showUsers();
+            clearData();
+
         }
 
 
@@ -299,7 +306,7 @@ public class UserView extends javax.swing.JFrame {
 
     private void clearData() {
         txtUserName.setText("");
-        txtCashBalance.setText("");
+        txtCashBalance.setText("0");
         txtPassword.setText("");
         txtUserId.setText("");
 
