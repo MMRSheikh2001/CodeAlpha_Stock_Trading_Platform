@@ -246,16 +246,20 @@ public class UserView extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         int row = tblShowUsers.getSelectedRow();
-        String id = tblShowUsers.getModel().getValueAt(row, 0).toString();
-        String userName = tblShowUsers.getModel().getValueAt(row, 1).toString();
-        String password = tblShowUsers.getModel().getValueAt(row, 2).toString();
-        String cashBalance = tblShowUsers.getModel().getValueAt(row, 3).toString();
+        if (row >= 0) {
 
-        txtUserId.setText(id);
-        txtUserName.setText(userName);
+            String id = tblShowUsers.getModel().getValueAt(row, 0).toString();
+            String userName = tblShowUsers.getModel().getValueAt(row, 1).toString();
+            String password = tblShowUsers.getModel().getValueAt(row, 2).toString();
+            String cashBalance = tblShowUsers.getModel().getValueAt(row, 3).toString();
 
-        txtPassword.setText(password);
-        txtCashBalance.setText(cashBalance);
+            txtUserId.setText(id);
+            txtUserName.setText(userName);
+
+            txtPassword.setText(password);
+            txtCashBalance.setText(cashBalance);
+
+        }
 
 
     }//GEN-LAST:event_tblShowUsersMouseClicked

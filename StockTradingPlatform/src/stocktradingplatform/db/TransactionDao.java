@@ -28,7 +28,7 @@ public class TransactionDao implements DaoService<Transaction>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public List<Transaction> findByUserId(){
+    public List<Transaction> findByUserId(Long userId){
     
           throw new UnsupportedOperationException("Not supported yet.");  
     }

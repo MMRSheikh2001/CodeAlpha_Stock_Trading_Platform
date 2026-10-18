@@ -4,10 +4,36 @@
  */
 package stocktradingplatform.db;
 
+import java.util.List;
+import stocktradingplatform.models.Stock;
+
 /**
  *
  * @author Administrator
  */
-public class StockDao {
+public class StockDao implements DaoService<Stock>{
+    
+
+    @Override
+    public void save(Stock e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Stock findById(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Stock> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+  
+
+    @Override
+    public void update(Stock e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }
