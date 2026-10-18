@@ -102,6 +102,26 @@ public class StockDao implements DaoService<Stock> {
         return count;
     }
 
+    public void updateStockPrice(Long id, Double price) {
+
+        sql = "update stocks set  currentPrice = ? where id = ?";
+
+        try {
+            ps = db.getCon().prepareStatement(sql);
+
+            ps.setDouble(1, price);
+            ps.setLong(2, id);
+            ps.executeUpdate();
+
+            ps.close();
+            db.getCon().close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(StockDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     @Override
     public void save(Stock e) {
 
