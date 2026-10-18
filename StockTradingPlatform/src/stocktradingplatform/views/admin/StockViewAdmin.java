@@ -96,6 +96,11 @@ public class StockViewAdmin extends javax.swing.JFrame {
         btnUpdateStock.setBackground(new java.awt.Color(0, 255, 255));
         btnUpdateStock.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnUpdateStock.setText("Update");
+        btnUpdateStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateStockMouseClicked(evt);
+            }
+        });
 
         btnDeleteStock.setBackground(new java.awt.Color(255, 0, 0));
         btnDeleteStock.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -183,6 +188,11 @@ public class StockViewAdmin extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblShowStocks.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblShowStocksMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblShowStocks);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -244,6 +254,65 @@ public class StockViewAdmin extends javax.swing.JFrame {
         clearData();
     }//GEN-LAST:event_btnResetStockMouseClicked
 
+    private void tblShowStocksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblShowStocksMouseClicked
+        // TODO add your handling code here:
+
+        int row = tblShowStocks.getSelectedRow();
+        if (row >= 0) {
+
+            String id = tblShowStocks.getModel().getValueAt(row, 0).toString();
+            String companyName = tblShowStocks.getModel().getValueAt(row, 1).toString();
+            String qtity = tblShowStocks.getModel().getValueAt(row, 2).toString();
+            String stockPrice = tblShowStocks.getModel().getValueAt(row, 3).toString();
+
+            txtStockId.setText(id);
+            txtStockCompanyName.setText(companyName);
+
+            txtStockQuantity.setText(qtity);
+            txtStockCurrentPrice.setText(stockPrice);
+
+        }
+
+
+    }//GEN-LAST:event_tblShowStocksMouseClicked
+
+    private void btnUpdateStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateStockMouseClicked
+        // TODO add your handling code here:
+
+        String idText = txtStockId.getText().trim();
+        String companyName = txtStockCompanyName.getText().trim();
+        String qtity = txtStockQuantity.getText().trim();
+
+        String currentPrice = txtStockCurrentPrice.getText().trim();
+
+        if (companyName.isEmpty() || qtity.isEmpty() || currentPrice.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Invalid Input");
+            return;
+        }
+
+        try {
+            Long id = Long.valueOf(idText);
+            Long quantity = Long.valueOf(qtity);
+            Double unitPrice = Double.valueOf(currentPrice);
+
+            Stock stock = new Stock();
+            stock.setCompanyName(companyName);
+            stock.setCurrentPrice(unitPrice);
+            stock.setQuantity(quantity);
+
+            stock.setId(id);
+
+            stockDao.update(stock);
+            clearData();
+            showStocks();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid Input : " + e);
+            return;
+        }
+
+    }//GEN-LAST:event_btnUpdateStockMouseClicked
+
     public void showStocks() {
         String[] list = {"SL", "Company Name", "Quantity", "Current Stock Price"};
         DefaultTableModel model = new DefaultTableModel();
@@ -294,7 +363,7 @@ public class StockViewAdmin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                MarketSimulator ms=new MarketSimulator();
+                MarketSimulator ms = new MarketSimulator();
                 ms.start();
                 new StockViewAdmin().setVisible(true);
             }
