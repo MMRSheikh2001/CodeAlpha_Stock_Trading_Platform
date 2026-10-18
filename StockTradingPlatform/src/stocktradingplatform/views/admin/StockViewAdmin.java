@@ -105,6 +105,11 @@ public class StockViewAdmin extends javax.swing.JFrame {
         btnDeleteStock.setBackground(new java.awt.Color(255, 0, 0));
         btnDeleteStock.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeleteStock.setText("Delete");
+        btnDeleteStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleteStockMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -312,6 +317,29 @@ public class StockViewAdmin extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnUpdateStockMouseClicked
+
+    private void btnDeleteStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteStockMouseClicked
+        // TODO add your handling code here:
+        String idText = txtStockId.getText().trim();
+
+        if (idText.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nothing to Delete");
+            return;
+
+        }
+
+        try {
+            Long id = Long.valueOf(idText);
+            stockDao.deleteStock(id);
+
+            clearData();
+            showStocks();
+
+        } catch (NumberFormatException e) {
+        }
+
+
+    }//GEN-LAST:event_btnDeleteStockMouseClicked
 
     public void showStocks() {
         String[] list = {"SL", "Company Name", "Quantity", "Current Stock Price"};

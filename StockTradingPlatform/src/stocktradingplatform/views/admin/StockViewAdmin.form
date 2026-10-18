@@ -229,6 +229,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Delete"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDeleteStockMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
