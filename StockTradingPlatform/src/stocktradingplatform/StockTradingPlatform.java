@@ -56,10 +56,9 @@ public class StockTradingPlatform {
 
 //        System.out.println("Company : "+ stockDao.findById(1L).getCompanyName());
 //        System.out.println("Current Price : "+stockDao.findById(1L).getCurrentPrice());
-        TransactionDao transactionDao = new TransactionDao();
-        transactionDao.createTable();
-        System.out.println("Total Transactions : " + transactionDao.countTransactions());
-
+//        TransactionDao transactionDao = new TransactionDao();
+//        transactionDao.createTable();
+//        System.out.println("Total Transactions : " + transactionDao.countTransactions());
     }
 
 }
