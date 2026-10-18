@@ -4,11 +4,21 @@
  */
 package stocktradingplatform.views.admin;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import stocktradingplatform.db.StockDao;
+import stocktradingplatform.models.Stock;
+import stocktradingplatform.models.User;
+import stocktradingplatform.services.MarketSimulator;
+
 /**
  *
  * @author Administrator
  */
 public class StockViewAdmin extends javax.swing.JFrame {
+
+    StockDao stockDao = new StockDao();
 
     /**
      * Creates new form StockViewAdmin
@@ -16,6 +26,7 @@ public class StockViewAdmin extends javax.swing.JFrame {
     public StockViewAdmin() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        showStocks();
     }
 
     /**
@@ -58,15 +69,29 @@ public class StockViewAdmin extends javax.swing.JFrame {
 
         jLabel4.setText("Quantity");
 
+        txtStockQuantity.setText("0");
+
         jLabel5.setText("Current Price");
+
+        txtStockCurrentPrice.setText("0.0");
 
         btnSaveStock.setBackground(new java.awt.Color(51, 204, 0));
         btnSaveStock.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSaveStock.setText("Save");
+        btnSaveStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSaveStockMouseClicked(evt);
+            }
+        });
 
         btnResetStock.setBackground(new java.awt.Color(255, 255, 0));
         btnResetStock.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnResetStock.setText("Reset");
+        btnResetStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnResetStockMouseClicked(evt);
+            }
+        });
 
         btnUpdateStock.setBackground(new java.awt.Color(0, 255, 255));
         btnUpdateStock.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -180,6 +205,65 @@ public class StockViewAdmin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSaveStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveStockMouseClicked
+        // TODO add your handling code here:
+        String companyName = txtStockCompanyName.getText().trim();
+        String qtity = txtStockQuantity.getText().trim();
+
+        String currentPrice = txtStockCurrentPrice.getText().trim();
+
+        if (companyName.isEmpty() || qtity.isEmpty() || currentPrice.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Invalid Input");
+            return;
+        }
+
+        try {
+            Long quantity = Long.valueOf(qtity);
+            Double unitPrice = Double.valueOf(currentPrice);
+
+            Stock stock = new Stock();
+            stock.setCompanyName(companyName);
+            stock.setCurrentPrice(unitPrice);
+            stock.setQuantity(quantity);
+
+            stockDao.save(stock);
+            clearData();
+            showStocks();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid Input : " + e);
+            return;
+        }
+
+
+    }//GEN-LAST:event_btnSaveStockMouseClicked
+
+    private void btnResetStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetStockMouseClicked
+        // TODO add your handling code here:
+
+        clearData();
+    }//GEN-LAST:event_btnResetStockMouseClicked
+
+    public void showStocks() {
+        String[] list = {"SL", "Company Name", "Quantity", "Current Stock Price"};
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(list);
+        tblShowStocks.setModel(model);
+        List<Stock> sList = stockDao.findAll();
+        for (Stock u : sList) {
+            model.addRow(new Object[]{u.getId(), u.getCompanyName(), u.getQuantity(), u.getCurrentPrice()});
+        }
+
+    }
+
+    private void clearData() {
+        txtStockId.setText("");
+        txtStockCompanyName.setText("");
+        txtStockCurrentPrice.setText("0.0");
+        txtStockQuantity.setText("0");
+
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -210,6 +294,8 @@ public class StockViewAdmin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                MarketSimulator ms=new MarketSimulator();
+                ms.start();
                 new StockViewAdmin().setVisible(true);
             }
         });
