@@ -236,6 +236,11 @@ public class StockViewAdmin extends javax.swing.JFrame {
             Long quantity = Long.valueOf(qtity);
             Double unitPrice = Double.valueOf(currentPrice);
 
+            if (quantity < 0 || unitPrice < 0) {
+                JOptionPane.showMessageDialog(null, "Invalid Quantity or Unit Price");
+                return;
+            }
+
             Stock stock = new Stock();
             stock.setCompanyName(companyName);
             stock.setCurrentPrice(unitPrice);
@@ -300,6 +305,11 @@ public class StockViewAdmin extends javax.swing.JFrame {
             Long quantity = Long.valueOf(qtity);
             Double unitPrice = Double.valueOf(currentPrice);
 
+            if (quantity < 0 || unitPrice < 0) {
+                JOptionPane.showMessageDialog(null, "Invalid Quantity or Unit Price");
+                return;
+            }
+
             Stock stock = new Stock();
             stock.setCompanyName(companyName);
             stock.setCurrentPrice(unitPrice);
@@ -336,6 +346,8 @@ public class StockViewAdmin extends javax.swing.JFrame {
             showStocks();
 
         } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, e);
+            return;
         }
 
 

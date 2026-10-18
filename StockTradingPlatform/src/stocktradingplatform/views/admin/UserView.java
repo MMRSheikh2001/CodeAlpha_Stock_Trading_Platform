@@ -272,8 +272,8 @@ public class UserView extends javax.swing.JFrame {
         String password = txtPassword.getText().trim();
         String cashBalance = txtCashBalance.getText().trim();
 
-        if (userDao.findByUserName(userName) != null) {
-            JOptionPane.showMessageDialog(null, "User Name Already exists");
+        if (!userDao.findById(Long.valueOf(id)).getId().equals(Long.valueOf(id))) {
+            JOptionPane.showMessageDialog(null, "Not same User");
             return;
 
         }

@@ -6,6 +6,7 @@ package stocktradingplatform;
 
 import stocktradingplatform.db.DataBase;
 import stocktradingplatform.db.StockDao;
+import stocktradingplatform.db.TransactionDao;
 import stocktradingplatform.db.UserDao;
 import stocktradingplatform.models.Stock;
 import stocktradingplatform.models.User;
@@ -44,7 +45,6 @@ public class StockTradingPlatform {
 //                + "\n password : " + admin.getPassword());
 
 //        Stock s = new Stock();
-
 //        s.setCompanyName("Pran");
 //        s.setCurrentPrice(5000.0);
 //        s.setQuantity(50L);
@@ -53,9 +53,12 @@ public class StockTradingPlatform {
 
         LoginView lv = new LoginView();
         lv.setVisible(true);
-        
-        System.out.println("Company : "+ stockDao.findById(1L).getCompanyName());
-        System.out.println("Current Price : "+stockDao.findById(1L).getCurrentPrice());
+
+//        System.out.println("Company : "+ stockDao.findById(1L).getCompanyName());
+//        System.out.println("Current Price : "+stockDao.findById(1L).getCurrentPrice());
+        TransactionDao transactionDao = new TransactionDao();
+        transactionDao.createTable();
+        System.out.println("Total Transactions : " + transactionDao.countTransactions());
 
     }
 

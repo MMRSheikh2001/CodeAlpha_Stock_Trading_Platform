@@ -18,10 +18,10 @@ import stocktradingplatform.views.admin.UserView;
  * @author Administrator
  */
 public class AdminDashboard extends javax.swing.JFrame {
-
+    
     UserDao userDao = new UserDao();
     StockDao stockDao = new StockDao();
-
+    
     TransactionDao transactionDao = new TransactionDao();
     HoldingDao holdingDao = new HoldingDao();
 
@@ -32,6 +32,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         initComponents();
         txtTotalUsers.setText(userDao.countUsers() + "");
         txtTotalStocks.setText(stockDao.countStocks() + "");
+        txtTotalTransactions.setText(transactionDao.countTransactions() + "");
     }
 
     /**
@@ -227,36 +228,36 @@ public class AdminDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         UserView uv = new UserView();
-
+        
         uv.setVisible(true);
-
+        
 
     }//GEN-LAST:event_btnUsersMouseClicked
 
     private void btnStocksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStocksMouseClicked
         // TODO add your handling code here:
         StockViewAdmin sva = new StockViewAdmin();
-
+        
         sva.setVisible(true);
-
+        
 
     }//GEN-LAST:event_btnStocksMouseClicked
 
     private void btnHoldingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHoldingsMouseClicked
         // TODO add your handling code here:
         HoldingViewAdmin hva = new HoldingViewAdmin();
-
+        
         hva.setVisible(true);
-
+        
 
     }//GEN-LAST:event_btnHoldingsMouseClicked
 
     private void btnTransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTransactionsMouseClicked
         // TODO add your handling code here:
         TransactionViewAdmin tva = new TransactionViewAdmin();
-
+        
         tva.setVisible(true);
-
+        
 
     }//GEN-LAST:event_btnTransactionsMouseClicked
 
