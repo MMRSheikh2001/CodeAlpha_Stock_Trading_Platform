@@ -122,6 +122,23 @@ public class StockDao implements DaoService<Stock> {
 
     }
 
+    public void deleteStock(Long id) {
+        sql = "update stocks set  quantity = 0 where id = ?";
+
+        try {
+            ps = db.getCon().prepareStatement(sql);
+            ps.setLong(1, id);
+            ps.executeUpdate();
+
+            ps.close();
+            db.getCon().close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(StockDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     @Override
     public void save(Stock e) {
 

@@ -7,7 +7,10 @@ package stocktradingplatform;
 import stocktradingplatform.db.DataBase;
 import stocktradingplatform.db.StockDao;
 import stocktradingplatform.db.UserDao;
+import stocktradingplatform.models.Stock;
 import stocktradingplatform.models.User;
+import stocktradingplatform.services.MarketSimulator;
+import stocktradingplatform.views.LoginView;
 
 /**
  *
@@ -31,15 +34,28 @@ public class StockTradingPlatform {
 //
 //        userDao.createTable();
 //        userDao.save(user);
-//        StockDao stockDao = new StockDao();
+        StockDao stockDao = new StockDao();
 //        stockDao.createTable();
 //
 //        System.out.println("Total stocks : " + stockDao.countStocks());
+//        User admin = userDao.findByUserName("admin");
+//
+//        System.out.println("Name : " + admin.getUserName() + " Balance : " + admin.getCashBalance()
+//                + "\n password : " + admin.getPassword());
 
-        User admin = userDao.findByUserName("admin");
+//        Stock s = new Stock();
 
-        System.out.println("Name : " + admin.getUserName() + " Balance : " + admin.getCashBalance()
-                + "\n password : " + admin.getPassword());
+//        s.setCompanyName("Pran");
+//        s.setCurrentPrice(5000.0);
+//        s.setQuantity(50L);
+//        stockDao.save(s);
+        new MarketSimulator().start();
+
+        LoginView lv = new LoginView();
+        lv.setVisible(true);
+        
+        System.out.println("Company : "+ stockDao.findById(1L).getCompanyName());
+        System.out.println("Current Price : "+stockDao.findById(1L).getCurrentPrice());
 
     }
 

@@ -4,6 +4,9 @@
  */
 package stocktradingplatform.views;
 
+import stocktradingplatform.db.HoldingDao;
+import stocktradingplatform.db.StockDao;
+import stocktradingplatform.db.TransactionDao;
 import stocktradingplatform.db.UserDao;
 import stocktradingplatform.views.admin.HoldingViewAdmin;
 import stocktradingplatform.views.admin.StockViewAdmin;
@@ -17,6 +20,10 @@ import stocktradingplatform.views.admin.UserView;
 public class AdminDashboard extends javax.swing.JFrame {
 
     UserDao userDao = new UserDao();
+    StockDao stockDao = new StockDao();
+
+    TransactionDao transactionDao = new TransactionDao();
+    HoldingDao holdingDao = new HoldingDao();
 
     /**
      * Creates new form AdminDashboard
@@ -24,6 +31,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     public AdminDashboard() {
         initComponents();
         txtTotalUsers.setText(userDao.countUsers() + "");
+        txtTotalStocks.setText(stockDao.countStocks() + "");
     }
 
     /**
