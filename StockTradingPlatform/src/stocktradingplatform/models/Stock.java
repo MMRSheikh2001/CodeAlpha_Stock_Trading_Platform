@@ -14,9 +14,9 @@ public class Stock {
 
     private String companyName;
 
-    private Long quantity;
+    private Long quantity = 0L;
 
-    private Double currentPrice;
+    private Double currentPrice = 0.0;
 
     public Long getId() {
         return id;

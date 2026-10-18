@@ -5,6 +5,7 @@
 package stocktradingplatform;
 
 import stocktradingplatform.db.DataBase;
+import stocktradingplatform.db.StockDao;
 import stocktradingplatform.db.UserDao;
 import stocktradingplatform.models.User;
 
@@ -23,20 +24,22 @@ public class StockTradingPlatform {
         UserDao userDao = new UserDao();
 
 //        User user = new User();
-
 //        user.setUserName("admin");
 //        user.setPassword("1234");
 //
 //        user.setIsAdmin(true);
 //
 //        userDao.createTable();
-
 //        userDao.save(user);
+//        StockDao stockDao = new StockDao();
+//        stockDao.createTable();
+//
+//        System.out.println("Total stocks : " + stockDao.countStocks());
 
         User admin = userDao.findByUserName("admin");
 
-        System.out.println("Name : " + admin.getUserName() + " Balance : " + admin.getCashBalance()+
-                "\n password : "+ admin.getPassword());
+        System.out.println("Name : " + admin.getUserName() + " Balance : " + admin.getCashBalance()
+                + "\n password : " + admin.getPassword());
 
     }
 
