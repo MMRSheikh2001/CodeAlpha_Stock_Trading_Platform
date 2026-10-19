@@ -13,7 +13,7 @@ import stocktradingplatform.models.User;
  * @author Administrator
  */
 public class LoginView extends javax.swing.JFrame {
-    
+
     UserDao userDao = new UserDao();
 
     /**
@@ -122,46 +122,45 @@ public class LoginView extends javax.swing.JFrame {
 
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
         // TODO add your handling code here:
-        
+
         String userName = txtUserName.getText().trim().toLowerCase();
         String password = txtPassword.getText().trim();
-        
+
         if (userName.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Invalid Input");
             return;
         }
-        
+
         User user = userDao.findByUserName(userName);
-        
+
         if (user == null) {
             JOptionPane.showMessageDialog(null, "Invalid User Name or Password");
             return;
         } else {
             if (password.equals(user.getPassword())) {
-                
+
                 if (user.getIsAdmin()) {
                     AdminDashboard ad = new AdminDashboard();
                     ad.setVisible(true);
-                    
+
                 } else {
-                    
-                    UserDashboard ud = new UserDashboard();
-                    ud.setUser(user);
-                    
+
+                    UserDashboard ud = new UserDashboard(user);
+
                     ud.setVisible(true);
-                    
+
                 }
-                
+
                 this.dispose();
-                
+
             } else {
                 JOptionPane.showMessageDialog(null, "Invalid User Name or Password");
                 return;
-                
+
             }
-            
+
         }
-        
+
 
     }//GEN-LAST:event_btnLoginMouseClicked
 

@@ -24,23 +24,13 @@ public class UserDashboard extends javax.swing.JFrame {
      */
     public UserDashboard() {
         initComponents();
-        if (user != null) {
-            txtWelcomeUser.setText(user.getUserName());
-            txtTotalCashBalance.setText(user.getCashBalance() + "");
-
-            txtTotalUserHoldings.setText(holdingDao.countUserHoldings(user.getId()) + "");
-            txtTotalUserTransactions.setText(transactionDao.countUserTransactions(user.getId()) + "");
-
-        }
 
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
+    public UserDashboard(User user) {
         this.user = user;
+        initComponents();
+        initUserData();
     }
 
     /**
@@ -290,4 +280,15 @@ public class UserDashboard extends javax.swing.JFrame {
     private javax.swing.JTextField txtTotalUserTransactions;
     private javax.swing.JLabel txtWelcomeUser;
     // End of variables declaration//GEN-END:variables
+
+    private void initUserData() {
+
+        if (this.user != null) {
+            txtWelcomeUser.setText("Welcome , " + user.getUserName());
+            txtTotalCashBalance.setText(user.getCashBalance() + "");
+
+            txtTotalUserHoldings.setText(holdingDao.countUserHoldings(user.getId()) + "");
+            txtTotalUserTransactions.setText(transactionDao.countUserTransactions(user.getId()) + "");
+        }
+    }
 }
