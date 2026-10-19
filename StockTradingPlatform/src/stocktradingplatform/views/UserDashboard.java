@@ -7,15 +7,19 @@ package stocktradingplatform.views;
 import stocktradingplatform.db.HoldingDao;
 import stocktradingplatform.db.TransactionDao;
 import stocktradingplatform.models.User;
+import stocktradingplatform.views.user.BuyStockView;
+import stocktradingplatform.views.user.HoldingViewUser;
+import stocktradingplatform.views.user.SellHoldingView;
+import stocktradingplatform.views.user.TransactionViewUser;
 
 /**
  *
  * @author Administrator
  */
 public class UserDashboard extends javax.swing.JFrame {
-
+    
     private User user;
-
+    
     HoldingDao holdingDao = new HoldingDao();
     TransactionDao transactionDao = new TransactionDao();
 
@@ -24,9 +28,9 @@ public class UserDashboard extends javax.swing.JFrame {
      */
     public UserDashboard() {
         initComponents();
-
+        
     }
-
+    
     public UserDashboard(User user) {
         this.user = user;
         initComponents();
@@ -199,25 +203,34 @@ public class UserDashboard extends javax.swing.JFrame {
 
     private void btnBuyStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuyStockMouseClicked
         // TODO add your handling code here:
-
+        BuyStockView bsv = new BuyStockView(this.user);
+        bsv.setVisible(true);
+        
 
     }//GEN-LAST:event_btnBuyStockMouseClicked
 
     private void btnSellHoldingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSellHoldingMouseClicked
         // TODO add your handling code here:
-
+        SellHoldingView shv = new SellHoldingView(this.user);
+        shv.setVisible(true);
+        
 
     }//GEN-LAST:event_btnSellHoldingMouseClicked
 
     private void btnAllHoldingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAllHoldingsMouseClicked
         // TODO add your handling code here:
-
+        HoldingViewUser hvu = new HoldingViewUser(this.user);
+        hvu.setVisible(true);
+        
 
     }//GEN-LAST:event_btnAllHoldingsMouseClicked
 
     private void btnAllTransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAllTransactionsMouseClicked
         // TODO add your handling code here:
-
+        
+        TransactionViewUser tvu = new TransactionViewUser(this.user);
+        tvu.setVisible(true);
+        
 
     }//GEN-LAST:event_btnAllTransactionsMouseClicked
 
@@ -226,7 +239,7 @@ public class UserDashboard extends javax.swing.JFrame {
         LoginView lv = new LoginView();
         lv.setVisible(true);
         this.dispose();
-
+        
 
     }//GEN-LAST:event_btnLogoutMouseClicked
 
@@ -282,11 +295,11 @@ public class UserDashboard extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initUserData() {
-
+        
         if (this.user != null) {
             txtWelcomeUser.setText("Welcome , " + user.getUserName());
             txtTotalCashBalance.setText(user.getCashBalance() + "");
-
+            
             txtTotalUserHoldings.setText(holdingDao.countUserHoldings(user.getId()) + "");
             txtTotalUserTransactions.setText(transactionDao.countUserTransactions(user.getId()) + "");
         }

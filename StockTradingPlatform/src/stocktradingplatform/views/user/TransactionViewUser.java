@@ -4,18 +4,28 @@
  */
 package stocktradingplatform.views.user;
 
+import stocktradingplatform.models.User;
+
 /**
  *
  * @author Administrator
  */
 public class TransactionViewUser extends javax.swing.JFrame {
 
+    private User user;
+
     /**
      * Creates new form TransactionViewUser
      */
     public TransactionViewUser() {
         initComponents();
-           setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    }
+
+    public TransactionViewUser(User user) {
+        this.user = user;
+        initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**

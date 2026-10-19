@@ -4,18 +4,30 @@
  */
 package stocktradingplatform.views.user;
 
+import stocktradingplatform.models.User;
+
 /**
  *
  * @author Administrator
  */
 public class BuyStockView extends javax.swing.JFrame {
 
+    private User user;
+
     /**
      * Creates new form BuyStockView
      */
     public BuyStockView() {
         initComponents();
-           setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    }
+
+    public BuyStockView(User user) {
+        this.user = user;
+
+        initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
     }
 
     /**

@@ -4,11 +4,15 @@
  */
 package stocktradingplatform.views.user;
 
+import stocktradingplatform.models.User;
+
 /**
  *
  * @author Administrator
  */
 public class HoldingViewUser extends javax.swing.JFrame {
+
+    private User user;
 
     /**
      * Creates new form HoldingViewUser
@@ -17,6 +21,12 @@ public class HoldingViewUser extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+    }
+
+    public HoldingViewUser(User user) {
+        this.user = user;
+        initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
