@@ -4,11 +4,22 @@
  */
 package stocktradingplatform.views.admin;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import stocktradingplatform.db.HoldingDao;
+import stocktradingplatform.db.StockDao;
+import stocktradingplatform.db.UserDao;
+import stocktradingplatform.models.Holding;
+
 /**
  *
  * @author Administrator
  */
 public class HoldingViewAdmin extends javax.swing.JFrame {
+
+    HoldingDao holdingDao = new HoldingDao();
+    StockDao stockDao = new StockDao();
+    UserDao userDao = new UserDao();
 
     /**
      * Creates new form HoldingViewAdmin
@@ -16,6 +27,7 @@ public class HoldingViewAdmin extends javax.swing.JFrame {
     public HoldingViewAdmin() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        showAllHoldings();
     }
 
     /**
@@ -27,21 +39,67 @@ public class HoldingViewAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblShowAllHoldings = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Total Holdings");
+
+        tblShowAllHoldings.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblShowAllHoldings);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    public void showAllHoldings() {
+
+        String[] list = {"SL", "User Name", "Company Name", "Quantity", "Average Buyed Price"};
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(list);
+        tblShowAllHoldings.setModel(model);
+        List<Holding> uList = holdingDao.findAll();
+        for (Holding u : uList) {
+            model.addRow(new Object[]{u.getId(),
+                userDao.findById(u.getUserId()).getUserName(),
+                stockDao.findById(u.getStockId()).getCompanyName(),
+                u.getQuantity(), u.getAverageBuyPrice()});
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -79,5 +137,8 @@ public class HoldingViewAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblShowAllHoldings;
     // End of variables declaration//GEN-END:variables
 }
