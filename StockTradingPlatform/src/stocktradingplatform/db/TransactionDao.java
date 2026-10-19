@@ -51,6 +51,32 @@ public class TransactionDao {
 
     }
 
+    public int countUserTransactions(Long id) {
+        sql = "select count(*) from transactions where userId=?";
+
+        int count = 0;
+
+        try {
+            ps = db.getCon().prepareStatement(sql);
+            ps.setLong(1, id);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+            rs.close();
+            ps.close();
+            db.getCon().close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TransactionDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return count;
+    }
+
     public int countTransactions() {
         sql = "select count(*) from transactions";
 

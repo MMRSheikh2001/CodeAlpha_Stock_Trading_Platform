@@ -5,6 +5,7 @@
 package stocktradingplatform;
 
 import stocktradingplatform.db.DataBase;
+import stocktradingplatform.db.HoldingDao;
 import stocktradingplatform.db.StockDao;
 import stocktradingplatform.db.TransactionDao;
 import stocktradingplatform.db.UserDao;
@@ -59,6 +60,11 @@ public class StockTradingPlatform {
 //        TransactionDao transactionDao = new TransactionDao();
 //        transactionDao.createTable();
 //        System.out.println("Total Transactions : " + transactionDao.countTransactions());
+//        HoldingDao holdingDao = new HoldingDao();
+//
+//        holdingDao.createTable();
+//        System.out.println("Total Holdings : " + holdingDao.countHoldings());
+
     }
 
 }

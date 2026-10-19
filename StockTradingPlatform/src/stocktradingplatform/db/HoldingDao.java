@@ -50,6 +50,32 @@ public class HoldingDao implements DaoService<Holding> {
 
     }
 
+    public int countUserHoldings(Long id) {
+        sql = "select count(*) from holdings where userId=?";
+
+        int count = 0;
+
+        try {
+            ps = db.getCon().prepareStatement(sql);
+            ps.setLong(1, id);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+            rs.close();
+            ps.close();
+            db.getCon().close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TransactionDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return count;
+    }
+
     public int countHoldings() {
 
         sql = "select count(*) from holdings";
@@ -73,7 +99,6 @@ public class HoldingDao implements DaoService<Holding> {
         return count;
     }
 
-    
     public Holding findByUserIdAndStockId(Long userId, Long stockId) {
 
         sql = "select * from holdings where userId = ? and stockId = ?";
@@ -105,7 +130,6 @@ public class HoldingDao implements DaoService<Holding> {
         return holding;
     }
 
-   
     public List<Holding> findByUserId(Long userId) {
 
         List<Holding> holdings = new ArrayList<>();
@@ -220,7 +244,6 @@ public class HoldingDao implements DaoService<Holding> {
         return holdings;
     }
 
-  
     @Override
     public void update(Holding e) {
 

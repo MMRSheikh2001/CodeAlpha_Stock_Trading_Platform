@@ -33,6 +33,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         txtTotalUsers.setText(userDao.countUsers() + "");
         txtTotalStocks.setText(stockDao.countStocks() + "");
         txtTotalTransactions.setText(transactionDao.countTransactions() + "");
+        txtTotalHoldings.setText(holdingDao.countHoldings() + "");
     }
 
     /**
