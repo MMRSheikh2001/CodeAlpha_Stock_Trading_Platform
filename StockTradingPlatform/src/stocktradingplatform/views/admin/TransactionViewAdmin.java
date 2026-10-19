@@ -4,18 +4,30 @@
  */
 package stocktradingplatform.views.admin;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import stocktradingplatform.db.StockDao;
+import stocktradingplatform.db.TransactionDao;
+import stocktradingplatform.db.UserDao;
+import stocktradingplatform.models.Transaction;
+
 /**
  *
  * @author Administrator
  */
 public class TransactionViewAdmin extends javax.swing.JFrame {
 
+    TransactionDao transactionDao = new TransactionDao();
+    UserDao userDao = new UserDao();
+    StockDao stockDao = new StockDao();
+
     /**
      * Creates new form TransactionViewAdmin
      */
     public TransactionViewAdmin() {
         initComponents();
-           setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        showAllTransactions();
     }
 
     /**
@@ -27,21 +39,62 @@ public class TransactionViewAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblShowAllTransactions = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("All Transactions");
+
+        tblShowAllTransactions.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblShowAllTransactions);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    public void showAllTransactions() {
+
+        String[] list = {"SL", "User Name", "Company Name", "Transaction Type", "Quantity", "Unit Price", "Total Price", "Date Time"};
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(list);
+        tblShowAllTransactions.setModel(model);
+        List<Transaction> uList = transactionDao.findAll();
+        for (Transaction u : uList) {
+            model.addRow(new Object[]{u.getId(), userDao.findById(u.getUserId()).getUserName(),
+                stockDao.findById(u.getStockId()).getCompanyName(),
+                u.getType().name(), u.getQuantity(), u.getUnitPrice(), u.getTotalPrice(), u.getCreatedAt().toString()});
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -79,5 +132,8 @@ public class TransactionViewAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblShowAllTransactions;
     // End of variables declaration//GEN-END:variables
 }
