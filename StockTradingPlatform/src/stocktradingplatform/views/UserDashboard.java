@@ -4,6 +4,8 @@
  */
 package stocktradingplatform.views;
 
+import stocktradingplatform.db.HoldingDao;
+import stocktradingplatform.db.TransactionDao;
 import stocktradingplatform.models.User;
 
 /**
@@ -14,11 +16,23 @@ public class UserDashboard extends javax.swing.JFrame {
 
     private User user;
 
+    HoldingDao holdingDao = new HoldingDao();
+    TransactionDao transactionDao = new TransactionDao();
+
     /**
      * Creates new form UserDashboard
      */
     public UserDashboard() {
         initComponents();
+        if (user != null) {
+            txtWelcomeUser.setText(user.getUserName());
+            txtTotalCashBalance.setText(user.getCashBalance() + "");
+
+            txtTotalUserHoldings.setText(holdingDao.countUserHoldings(user.getId()) + "");
+            txtTotalUserTransactions.setText(transactionDao.countUserTransactions(user.getId()) + "");
+
+        }
+
     }
 
     public User getUser() {
@@ -38,22 +52,193 @@ public class UserDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        txtWelcomeUser = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtTotalCashBalance = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtTotalUserHoldings = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtTotalUserTransactions = new javax.swing.JTextField();
+        btnSellHolding = new javax.swing.JButton();
+        btnAllHoldings = new javax.swing.JButton();
+        btnAllTransactions = new javax.swing.JButton();
+        btnBuyStock = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        txtWelcomeUser.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txtWelcomeUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtWelcomeUser.setText("Welcome");
+
+        jLabel1.setText("Total Cash Balance");
+
+        txtTotalCashBalance.setEditable(false);
+
+        jLabel2.setText("Total Holdings");
+
+        txtTotalUserHoldings.setEditable(false);
+
+        jLabel3.setText("Total Transactions");
+
+        txtTotalUserTransactions.setEditable(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txtWelcomeUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
+                .addGap(88, 88, 88)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtTotalCashBalance)
+                    .addComponent(txtTotalUserHoldings)
+                    .addComponent(txtTotalUserTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(txtWelcomeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotalCashBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotalUserHoldings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotalUserTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 37, Short.MAX_VALUE))
+        );
+
+        btnSellHolding.setBackground(new java.awt.Color(255, 51, 0));
+        btnSellHolding.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnSellHolding.setText("Sell");
+        btnSellHolding.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSellHoldingMouseClicked(evt);
+            }
+        });
+
+        btnAllHoldings.setBackground(new java.awt.Color(0, 255, 255));
+        btnAllHoldings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnAllHoldings.setText("Holdings");
+        btnAllHoldings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAllHoldingsMouseClicked(evt);
+            }
+        });
+
+        btnAllTransactions.setBackground(new java.awt.Color(255, 255, 0));
+        btnAllTransactions.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAllTransactions.setText("Transactions");
+        btnAllTransactions.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAllTransactionsMouseClicked(evt);
+            }
+        });
+
+        btnBuyStock.setBackground(new java.awt.Color(51, 204, 0));
+        btnBuyStock.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnBuyStock.setText("Buy");
+        btnBuyStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuyStockMouseClicked(evt);
+            }
+        });
+
+        btnLogout.setBackground(new java.awt.Color(255, 102, 102));
+        btnLogout.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnLogout.setText("Logout");
+        btnLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLogoutMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(110, 110, 110)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAllHoldings, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuyStock, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAllTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSellHolding, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(92, 92, 92))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(261, 261, 261)
+                .addComponent(btnLogout)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSellHolding, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuyStock, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAllTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAllHoldings, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addComponent(btnLogout)
+                .addGap(22, 22, 22))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuyStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuyStockMouseClicked
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_btnBuyStockMouseClicked
+
+    private void btnSellHoldingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSellHoldingMouseClicked
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_btnSellHoldingMouseClicked
+
+    private void btnAllHoldingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAllHoldingsMouseClicked
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_btnAllHoldingsMouseClicked
+
+    private void btnAllTransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAllTransactionsMouseClicked
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_btnAllTransactionsMouseClicked
+
+    private void btnLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseClicked
+        // TODO add your handling code here:
+        LoginView lv = new LoginView();
+        lv.setVisible(true);
+        this.dispose();
+
+
+    }//GEN-LAST:event_btnLogoutMouseClicked
 
     /**
      * @param args the command line arguments
@@ -91,5 +276,18 @@ public class UserDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAllHoldings;
+    private javax.swing.JButton btnAllTransactions;
+    private javax.swing.JButton btnBuyStock;
+    private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnSellHolding;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField txtTotalCashBalance;
+    private javax.swing.JTextField txtTotalUserHoldings;
+    private javax.swing.JTextField txtTotalUserTransactions;
+    private javax.swing.JLabel txtWelcomeUser;
     // End of variables declaration//GEN-END:variables
 }
