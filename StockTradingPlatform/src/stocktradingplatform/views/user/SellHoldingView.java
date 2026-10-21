@@ -129,6 +129,11 @@ public class SellHoldingView extends javax.swing.JFrame {
         btnSellHolding.setBackground(new java.awt.Color(255, 51, 0));
         btnSellHolding.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSellHolding.setText("Sell");
+        btnSellHolding.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSellHoldingMouseClicked(evt);
+            }
+        });
 
         btnResetHolding.setBackground(new java.awt.Color(255, 255, 0));
         btnResetHolding.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -279,6 +284,13 @@ public class SellHoldingView extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_tblShowUserHoldingsMouseClicked
+
+    private void btnSellHoldingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSellHoldingMouseClicked
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_btnSellHoldingMouseClicked
 
     /**
      * @param args the command line arguments
