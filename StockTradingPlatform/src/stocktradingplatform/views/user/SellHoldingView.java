@@ -4,7 +4,9 @@
  */
 package stocktradingplatform.views.user;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import stocktradingplatform.db.HoldingDao;
 import stocktradingplatform.db.StockDao;
@@ -12,6 +14,8 @@ import stocktradingplatform.db.TransactionDao;
 import stocktradingplatform.db.UserDao;
 import stocktradingplatform.models.Holding;
 import stocktradingplatform.models.Stock;
+import stocktradingplatform.models.Transaction;
+import stocktradingplatform.models.TransactionType;
 import stocktradingplatform.models.User;
 import stocktradingplatform.services.MarketSimulator;
 
@@ -262,34 +266,98 @@ public class SellHoldingView extends javax.swing.JFrame {
 
     private void tblShowUserHoldingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblShowUserHoldingsMouseClicked
         // TODO add your handling code here:
-         int row = tblShowUserHoldings.getSelectedRow();
-    if (row >= 0) {
+        int row = tblShowUserHoldings.getSelectedRow();
+        if (row >= 0) {
 
-        String id = tblShowUserHoldings.getModel().getValueAt(row, 0).toString();
-        String companyName = tblShowUserHoldings.getModel().getValueAt(row, 2).toString();
-        String quantity = tblShowUserHoldings.getModel().getValueAt(row, 3).toString();
-        String averageBuyPrice = tblShowUserHoldings.getModel().getValueAt(row, 4).toString();
+            String id = tblShowUserHoldings.getModel().getValueAt(row, 0).toString();
+            String companyName = tblShowUserHoldings.getModel().getValueAt(row, 2).toString();
+            String quantity = tblShowUserHoldings.getModel().getValueAt(row, 3).toString();
+            String averageBuyPrice = tblShowUserHoldings.getModel().getValueAt(row, 4).toString();
 
-        txtHoldingId.setText(id);
-        txtCompanyName.setText(companyName);
-        txtHoldingQuantity.setText(quantity);
-        txtAverageBuyPrice.setText(averageBuyPrice);
-        txtSellQuantity.setText("");
+            txtHoldingId.setText(id);
+            txtCompanyName.setText(companyName);
+            txtHoldingQuantity.setText(quantity);
+            txtAverageBuyPrice.setText(averageBuyPrice);
+            txtSellQuantity.setText("");
 
-        // current price is not in the table, so read it from the stock
-        Holding holding = holdingDao.findById(Long.valueOf(id));
-        Stock stock = holding == null ? null : stockDao.findById(holding.getStockId());
-        txtCurrrentMarketPrice.setText(stock == null ? "" : String.valueOf(stock.getCurrentPrice()));
-    }
-        
-        
+            // current price is not in the table, so read it from the stock
+            Holding holding = holdingDao.findById(Long.valueOf(id));
+            Stock stock = holding == null ? null : stockDao.findById(holding.getStockId());
+            txtCurrrentMarketPrice.setText(stock == null ? "" : String.valueOf(stock.getCurrentPrice()));
+        }
+
+
     }//GEN-LAST:event_tblShowUserHoldingsMouseClicked
 
     private void btnSellHoldingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSellHoldingMouseClicked
         // TODO add your handling code here:
-        
-        
-        
+
+        String id = txtHoldingId.getText().trim();
+        if (id.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Select a holding from the table first");
+            return;
+        }
+
+        Long sellQuantity = 0L;
+        try {
+            sellQuantity = Long.valueOf(txtSellQuantity.getText().trim());
+
+        } catch (NumberFormatException e) {
+
+            JOptionPane.showMessageDialog(null, "Invalid Input  " + e);
+            return;
+        }
+
+        Holding holding = holdingDao.findById(Long.valueOf(id));
+
+        if (holding == null || !holding.getUserId().equals(user.getId())) {
+            JOptionPane.showMessageDialog(null, "Holding not found");
+            return;
+        }
+
+        if (sellQuantity <= 0 || sellQuantity > holding.getQuantity()) {
+            JOptionPane.showMessageDialog(null, "Sell quantity must be between 1 and " + holding.getQuantity());
+            return;
+        }
+
+        Stock stock = stockDao.findById(holding.getStockId());
+
+        if (stock == null) {
+            JOptionPane.showMessageDialog(null, "Stock not found");
+            return;
+        }
+
+        Double totalPrice = Math.round(sellQuantity * stock.getCurrentPrice() * 100) / 100.0;
+
+        holding.setQuantity(holding.getQuantity() - sellQuantity);
+        holdingDao.update(holding);
+
+        Transaction transaction = new Transaction();
+
+        transaction.setUserId(user.getId());
+        transaction.setStockId(stock.getId());
+        transaction.setType(TransactionType.SELL);
+        transaction.setQuantity(sellQuantity);
+        transaction.setUnitPrice(stock.getCurrentPrice());
+        transaction.setTotalPrice(totalPrice);
+        transaction.setCreatedAt(LocalDateTime.now());
+
+        transactionDao.save(transaction);
+
+        stock.setQuantity(stock.getQuantity() + sellQuantity);
+        stockDao.update(stock);
+
+        User currentUser = userDao.findById(user.getId());
+        currentUser.setCashBalance(currentUser.getCashBalance() + totalPrice);
+        userDao.update(currentUser);
+
+        user.setCashBalance(currentUser.getCashBalance());
+
+        JOptionPane.showMessageDialog(null, "Sold " + sellQuantity + " shares of " + stock.getCompanyName() + " for " + totalPrice);
+
+        clearData();
+        showUserHoldings();
+
     }//GEN-LAST:event_btnSellHoldingMouseClicked
 
     /**
