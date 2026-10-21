@@ -4,7 +4,15 @@
  */
 package stocktradingplatform.views.user;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import stocktradingplatform.db.HoldingDao;
+import stocktradingplatform.db.StockDao;
+import stocktradingplatform.db.TransactionDao;
+import stocktradingplatform.db.UserDao;
+import stocktradingplatform.models.Holding;
 import stocktradingplatform.models.User;
+import stocktradingplatform.services.MarketSimulator;
 
 /**
  *
@@ -13,6 +21,12 @@ import stocktradingplatform.models.User;
 public class SellHoldingView extends javax.swing.JFrame {
 
     private User user;
+    HoldingDao holdingDao = new HoldingDao();
+    StockDao stockDao = new StockDao();
+
+    UserDao userDao = new UserDao();
+
+    TransactionDao transactionDao = new TransactionDao();
 
     /**
      * Creates new form SellHoldingView
@@ -20,12 +34,39 @@ public class SellHoldingView extends javax.swing.JFrame {
     public SellHoldingView() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        showUserHoldings();
     }
 
     public SellHoldingView(User user) {
         this.user = user;
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        showUserHoldings();
+    }
+
+    public void showUserHoldings() {
+        String[] list = {"SL", "User Name", "Company Name", "Quantity", "Average Buyed Price"};
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(list);
+        tblShowUserHoldings.setModel(model);
+        List<Holding> uList = holdingDao.findByUserId(user.getId());
+        for (Holding u : uList) {
+            model.addRow(new Object[]{u.getId(),
+                userDao.findById(u.getUserId()).getUserName(),
+                stockDao.findById(u.getStockId()).getCompanyName(),
+                u.getQuantity(), u.getAverageBuyPrice()});
+        }
+
+    }
+
+    private void clearData() {
+        txtAverageBuyPrice.setText("");
+        txtCompanyName.setText("");
+        txtCurrrentMarketPrice.setText("");
+        txtHoldingId.setText("");
+        txtHoldingQuantity.setText("");
+        txtSellQuantity.setText("");
+
     }
 
     /**
@@ -37,22 +78,188 @@ public class SellHoldingView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtHoldingId = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtCompanyName = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtHoldingQuantity = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtAverageBuyPrice = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtCurrrentMarketPrice = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtSellQuantity = new javax.swing.JTextField();
+        btnSellHolding = new javax.swing.JButton();
+        btnResetHolding = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblShowUserHoldings = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Select Your Holdings from Table and Sell Them");
+
+        jLabel2.setText("Holding Id");
+
+        txtHoldingId.setEditable(false);
+
+        jLabel3.setText("Company Name");
+
+        txtCompanyName.setEditable(false);
+
+        jLabel4.setText("Quantity Holding");
+
+        txtHoldingQuantity.setEditable(false);
+
+        jLabel5.setText("Average Buy Price");
+
+        txtAverageBuyPrice.setEditable(false);
+
+        jLabel6.setText("Current Market Price");
+
+        txtCurrrentMarketPrice.setEditable(false);
+
+        jLabel7.setText("Sell Quantity");
+
+        btnSellHolding.setBackground(new java.awt.Color(255, 51, 0));
+        btnSellHolding.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSellHolding.setText("Sell");
+
+        btnResetHolding.setBackground(new java.awt.Color(255, 255, 0));
+        btnResetHolding.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnResetHolding.setText("Reset");
+        btnResetHolding.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnResetHoldingMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtHoldingId, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(txtCompanyName, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtHoldingQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtAverageBuyPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnSellHolding)
+                                .addGap(135, 135, 135)
+                                .addComponent(btnResetHolding))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtCurrrentMarketPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSellQuantity)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtHoldingId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtCompanyName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtHoldingQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtAverageBuyPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtCurrrentMarketPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtSellQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSellHolding)
+                    .addComponent(btnResetHolding))
+                .addGap(24, 24, 24))
+        );
+
+        tblShowUserHoldings.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblShowUserHoldings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblShowUserHoldingsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblShowUserHoldings);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnResetHoldingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetHoldingMouseClicked
+        // TODO add your handling code here:
+
+        clearData();
+    }//GEN-LAST:event_btnResetHoldingMouseClicked
+
+    private void tblShowUserHoldingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblShowUserHoldingsMouseClicked
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_tblShowUserHoldingsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -84,11 +291,31 @@ public class SellHoldingView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                MarketSimulator ms = new MarketSimulator();
+                ms.start();
                 new SellHoldingView().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnResetHolding;
+    private javax.swing.JButton btnSellHolding;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblShowUserHoldings;
+    private javax.swing.JTextField txtAverageBuyPrice;
+    private javax.swing.JTextField txtCompanyName;
+    private javax.swing.JTextField txtCurrrentMarketPrice;
+    private javax.swing.JTextField txtHoldingId;
+    private javax.swing.JTextField txtHoldingQuantity;
+    private javax.swing.JTextField txtSellQuantity;
     // End of variables declaration//GEN-END:variables
 }
