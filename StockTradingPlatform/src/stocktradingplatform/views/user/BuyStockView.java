@@ -4,7 +4,19 @@
  */
 package stocktradingplatform.views.user;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import stocktradingplatform.db.HoldingDao;
+import stocktradingplatform.db.StockDao;
+import stocktradingplatform.db.TransactionDao;
+import stocktradingplatform.models.Holding;
+import stocktradingplatform.models.Stock;
+import stocktradingplatform.models.Transaction;
+import stocktradingplatform.models.TransactionType;
 import stocktradingplatform.models.User;
+import stocktradingplatform.services.MarketSimulator;
 
 /**
  *
@@ -14,12 +26,17 @@ public class BuyStockView extends javax.swing.JFrame {
 
     private User user;
 
+    StockDao stockDao = new StockDao();
+    HoldingDao holdingDao = new HoldingDao();
+    TransactionDao transactionDao = new TransactionDao();
+
     /**
      * Creates new form BuyStockView
      */
     public BuyStockView() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        showStocks();
     }
 
     public BuyStockView(User user) {
@@ -27,6 +44,19 @@ public class BuyStockView extends javax.swing.JFrame {
 
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        showStocks();
+
+    }
+
+    public void showStocks() {
+        String[] list = {"SL", "Company Name", "Quantity", "Current Stock Price"};
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(list);
+        tblShowStocks.setModel(model);
+        List<Stock> sList = stockDao.findAll();
+        for (Stock u : sList) {
+            model.addRow(new Object[]{u.getId(), u.getCompanyName(), u.getQuantity(), u.getCurrentPrice()});
+        }
 
     }
 
@@ -39,22 +69,300 @@ public class BuyStockView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtStockId = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtCompanyName = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtAvailableStock = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtStockCurrentPrice = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtBuyQuantity = new javax.swing.JTextField();
+        btnBuyStock = new javax.swing.JButton();
+        btnResetStock = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblShowStocks = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Select a Company from table and buy as many Units of Stock Share as you want");
+
+        jLabel2.setText("Stock Id");
+
+        txtStockId.setEditable(false);
+
+        jLabel3.setText("Company Name");
+
+        txtCompanyName.setEditable(false);
+
+        jLabel4.setText("Available Stock");
+
+        txtAvailableStock.setEditable(false);
+
+        jLabel5.setText("Current Price");
+
+        txtStockCurrentPrice.setEditable(false);
+
+        jLabel6.setText("Buy Quantity");
+
+        btnBuyStock.setBackground(new java.awt.Color(0, 153, 0));
+        btnBuyStock.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnBuyStock.setText("Buy");
+        btnBuyStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuyStockMouseClicked(evt);
+            }
+        });
+
+        btnResetStock.setBackground(new java.awt.Color(255, 255, 0));
+        btnResetStock.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnResetStock.setText("Reset");
+        btnResetStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnResetStockMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtAvailableStock, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtStockCurrentPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtStockId, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCompanyName, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtBuyQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(btnBuyStock)
+                        .addGap(58, 58, 58)
+                        .addComponent(btnResetStock)))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtStockId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtCompanyName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtAvailableStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtStockCurrentPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtBuyQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuyStock)
+                    .addComponent(btnResetStock))
+                .addGap(0, 37, Short.MAX_VALUE))
+        );
+
+        tblShowStocks.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblShowStocks.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblShowStocksMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblShowStocks);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblShowStocksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblShowStocksMouseClicked
+        // TODO add your handling code here:
+
+        int row = tblShowStocks.getSelectedRow();
+        if (row >= 0) {
+
+            String id = tblShowStocks.getModel().getValueAt(row, 0).toString();
+            String companyName = tblShowStocks.getModel().getValueAt(row, 1).toString();
+            String qtity = tblShowStocks.getModel().getValueAt(row, 2).toString();
+            String stockPrice = tblShowStocks.getModel().getValueAt(row, 3).toString();
+
+            txtStockId.setText(id);
+            txtCompanyName.setText(companyName);
+
+            txtAvailableStock.setText(qtity);
+            txtStockCurrentPrice.setText(stockPrice);
+
+        }
+    }//GEN-LAST:event_tblShowStocksMouseClicked
+
+    private void btnResetStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetStockMouseClicked
+        // TODO add your handling code here:
+
+        clearData();
+    }//GEN-LAST:event_btnResetStockMouseClicked
+
+    private void btnBuyStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuyStockMouseClicked
+        // TODO add your handling code here:
+        String id = txtStockId.getText().trim();
+        Long stockId = Long.valueOf(id);
+
+        Stock stock = stockDao.findById(stockId);
+        Long buyQuantity = 0L;
+        try {
+            buyQuantity = Long.valueOf(txtBuyQuantity.getText().trim());
+            if (buyQuantity <= 0 || buyQuantity > stock.getQuantity()) {
+                JOptionPane.showMessageDialog(null, "Invalid Input");
+                return;
+
+            }
+
+        } catch (NumberFormatException e) {
+
+            JOptionPane.showMessageDialog(null, "Invalid Input  " + e);
+            return;
+
+        }
+
+        Holding holding = holdingDao.findByUserIdAndStockId(user.getId(), stockId);
+
+        if (holding == null) {
+            Holding newHolding = new Holding();
+
+            newHolding.setQuantity(buyQuantity);
+            newHolding.setAverageBuyPrice(stock.getCurrentPrice());
+            newHolding.setStockId(stockId);
+            newHolding.setUserId(user.getId());
+
+            holdingDao.save(newHolding);
+
+            Transaction transaction = new Transaction();
+            transaction.setUserId(user.getId());
+            transaction.setStockId(stockId);
+            transaction.setType(TransactionType.BUY);
+            transaction.setQuantity(buyQuantity);
+            transaction.setUnitPrice(stock.getCurrentPrice());
+            transaction.setTotalPrice(buyQuantity * transaction.getUnitPrice());
+            transaction.setCreatedAt(LocalDateTime.now());
+
+            transactionDao.save(transaction);
+
+            Stock newStock = new Stock();
+
+            newStock.setId(stockId);
+
+            newStock.setCompanyName(stock.getCompanyName());
+            newStock.setQuantity(stock.getQuantity() - buyQuantity);
+            newStock.setCurrentPrice(stock.getCurrentPrice());
+
+            stockDao.update(newStock);
+
+            clearData();
+
+        } else {
+            Holding newHolding = new Holding();
+
+            newHolding.setId(holding.getId());
+            newHolding.setStockId(stockId);
+            newHolding.setUserId(holding.getUserId());
+
+            newHolding.setQuantity(holding.getQuantity() + buyQuantity);
+
+            Double newPrice = holding.getAverageBuyPrice() * holding.getQuantity() + stock.getCurrentPrice() * buyQuantity;
+
+            newHolding.setAverageBuyPrice(newPrice);
+
+            holdingDao.update(newHolding);
+
+            Transaction transaction = new Transaction();
+
+            transaction.setUserId(user.getId());
+            transaction.setStockId(stockId);
+            transaction.setType(TransactionType.BUY);
+            transaction.setQuantity(buyQuantity);
+            transaction.setUnitPrice(stock.getCurrentPrice());
+            transaction.setTotalPrice(buyQuantity * transaction.getUnitPrice());
+            transaction.setCreatedAt(LocalDateTime.now());
+
+            transactionDao.save(transaction);
+
+            Stock newStock = new Stock();
+
+            newStock.setId(stockId);
+
+            newStock.setCompanyName(stock.getCompanyName());
+            newStock.setQuantity(stock.getQuantity() - buyQuantity);
+            newStock.setCurrentPrice(stock.getCurrentPrice());
+
+            stockDao.update(newStock);
+
+            clearData();
+
+        }
+
+        showStocks();
+
+
+    }//GEN-LAST:event_btnBuyStockMouseClicked
+
+    private void clearData() {
+
+        txtAvailableStock.setText("");
+        txtBuyQuantity.setText("");
+        txtCompanyName.setText("");
+        txtStockCurrentPrice.setText("");
+        txtStockId.setText("");
+
+    }
 
     /**
      * @param args the command line arguments
@@ -86,11 +394,31 @@ public class BuyStockView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                MarketSimulator ms = new MarketSimulator();
+                ms.start();
+
                 new BuyStockView().setVisible(true);
+
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuyStock;
+    private javax.swing.JButton btnResetStock;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblShowStocks;
+    private javax.swing.JTextField txtAvailableStock;
+    private javax.swing.JTextField txtBuyQuantity;
+    private javax.swing.JTextField txtCompanyName;
+    private javax.swing.JTextField txtStockCurrentPrice;
+    private javax.swing.JTextField txtStockId;
     // End of variables declaration//GEN-END:variables
 }
