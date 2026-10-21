@@ -11,6 +11,7 @@ import stocktradingplatform.db.StockDao;
 import stocktradingplatform.db.TransactionDao;
 import stocktradingplatform.db.UserDao;
 import stocktradingplatform.models.Holding;
+import stocktradingplatform.models.Stock;
 import stocktradingplatform.models.User;
 import stocktradingplatform.services.MarketSimulator;
 
@@ -256,7 +257,25 @@ public class SellHoldingView extends javax.swing.JFrame {
 
     private void tblShowUserHoldingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblShowUserHoldingsMouseClicked
         // TODO add your handling code here:
-        
+         int row = tblShowUserHoldings.getSelectedRow();
+    if (row >= 0) {
+
+        String id = tblShowUserHoldings.getModel().getValueAt(row, 0).toString();
+        String companyName = tblShowUserHoldings.getModel().getValueAt(row, 2).toString();
+        String quantity = tblShowUserHoldings.getModel().getValueAt(row, 3).toString();
+        String averageBuyPrice = tblShowUserHoldings.getModel().getValueAt(row, 4).toString();
+
+        txtHoldingId.setText(id);
+        txtCompanyName.setText(companyName);
+        txtHoldingQuantity.setText(quantity);
+        txtAverageBuyPrice.setText(averageBuyPrice);
+        txtSellQuantity.setText("");
+
+        // current price is not in the table, so read it from the stock
+        Holding holding = holdingDao.findById(Long.valueOf(id));
+        Stock stock = holding == null ? null : stockDao.findById(holding.getStockId());
+        txtCurrrentMarketPrice.setText(stock == null ? "" : String.valueOf(stock.getCurrentPrice()));
+    }
         
         
     }//GEN-LAST:event_tblShowUserHoldingsMouseClicked
