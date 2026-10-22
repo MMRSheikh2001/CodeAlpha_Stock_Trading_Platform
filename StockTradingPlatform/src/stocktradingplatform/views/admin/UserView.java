@@ -272,34 +272,52 @@ public class UserView extends javax.swing.JFrame {
         String password = txtPassword.getText().trim();
         String cashBalance = txtCashBalance.getText().trim();
 
-        if (!userDao.findById(Long.valueOf(id)).getId().equals(Long.valueOf(id))) {
-            JOptionPane.showMessageDialog(null, "Not same User");
+        if (id.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Select a user from the table first");
+            return;
+        }
+
+        if (userName.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Give valid User Name and Password");
             return;
 
         }
 
+        Double balance;
         try {
-            Long userId = Long.valueOf(id);
-            Double balance = Double.valueOf(cashBalance);
-
-            User user = new User();
-
-            user.setId(userId);
-            user.setUserName(userName);
-            user.setPassword(password);
-            user.setCashBalance(balance);
-
-            userDao.update(user);
-
+            balance = Double.valueOf(cashBalance);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, e);
-        } finally {
-            showUsers();
-            clearData();
-
+            JOptionPane.showMessageDialog(null, "Give Proper Balance" + e);
+            return;
         }
 
+        if (balance < 0) {
+            JOptionPane.showMessageDialog(null, "Balance cannot be negative");
+            return;
+        }
 
+        User user = userDao.findById(Long.valueOf(id));
+
+        if (user == null) {
+            JOptionPane.showMessageDialog(null, "User not found");
+            return;
+        }
+
+        User sameName = userDao.findByUserName(userName);
+
+        if (sameName != null && !sameName.getId().equals(user.getId())) {
+            JOptionPane.showMessageDialog(null, "User Name Already exists");
+            return;
+        }
+
+        user.setUserName(userName);
+        user.setPassword(password);
+        user.setCashBalance(balance);
+
+        userDao.update(user);
+
+        showUsers();
+        clearData();
     }//GEN-LAST:event_btnUpdateUserMouseClicked
 
     public void showUsers() {
