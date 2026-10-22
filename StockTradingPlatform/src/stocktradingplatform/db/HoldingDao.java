@@ -51,7 +51,7 @@ public class HoldingDao implements DaoService<Holding> {
     }
 
     public int countUserHoldings(Long id) {
-        sql = "select count(*) from holdings where userId=?";
+      sql = "select count(*) from holdings where userId=? and quantity > 0";
 
         int count = 0;
 
@@ -74,6 +74,30 @@ public class HoldingDao implements DaoService<Holding> {
         }
 
         return count;
+    }
+
+    public double getHoldingsValue(Long userId) {
+
+        sql = "select coalesce(sum(h.quantity * s.currentPrice), 0) from holdings h join stocks s on s.id = h.stockId where h.userId = ?";
+        double value = 0;
+
+        try {
+            ps = db.getCon().prepareStatement(sql);
+            ps.setLong(1, userId);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                value = rs.getDouble(1);
+            }
+
+            rs.close();
+            ps.close();
+            db.getCon().close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(HoldingDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return value;
     }
 
     public int countHoldings() {

@@ -7,10 +7,12 @@ package stocktradingplatform.views.user;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import stocktradingplatform.db.HoldingDao;
 import stocktradingplatform.db.StockDao;
 import stocktradingplatform.db.TransactionDao;
+import stocktradingplatform.db.UserDao;
 import stocktradingplatform.models.Holding;
 import stocktradingplatform.models.Stock;
 import stocktradingplatform.models.Transaction;
@@ -30,6 +32,10 @@ public class BuyStockView extends javax.swing.JFrame {
     HoldingDao holdingDao = new HoldingDao();
     TransactionDao transactionDao = new TransactionDao();
 
+    Timer refreshTimer;
+
+    UserDao userDao = new UserDao();
+
     /**
      * Creates new form BuyStockView
      */
@@ -37,6 +43,7 @@ public class BuyStockView extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         showStocks();
+        startLiveRefresh();
     }
 
     public BuyStockView(User user) {
@@ -45,7 +52,44 @@ public class BuyStockView extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         showStocks();
+        startLiveRefresh();
 
+    }
+
+    private void startLiveRefresh() {
+
+        refreshTimer = new Timer(3000, e -> refreshStocks());
+        refreshTimer.start();
+    }
+
+    private void refreshStocks() {
+
+        String selectedId = txtStockId.getText().trim();
+
+        showStocks();
+
+        if (selectedId.isEmpty()) {
+            return;
+        }
+
+        for (int i = 0; i < tblShowStocks.getRowCount(); i++) {
+            if (tblShowStocks.getModel().getValueAt(i, 0).toString().equals(selectedId)) {
+
+                tblShowStocks.setRowSelectionInterval(i, i);
+                txtAvailableStock.setText(tblShowStocks.getModel().getValueAt(i, 2).toString());
+                txtStockCurrentPrice.setText(tblShowStocks.getModel().getValueAt(i, 3).toString());
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void dispose() {
+
+        if (refreshTimer != null) {
+            refreshTimer.stop();
+        }
+        super.dispose();
     }
 
     public void showStocks() {
@@ -254,14 +298,26 @@ public class BuyStockView extends javax.swing.JFrame {
     private void btnBuyStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuyStockMouseClicked
         // TODO add your handling code here:
         String id = txtStockId.getText().trim();
+
+        if (id.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Select a stock from the table first");
+            return;
+        }
+
         Long stockId = Long.valueOf(id);
 
         Stock stock = stockDao.findById(stockId);
+
+        if (stock == null) {
+            JOptionPane.showMessageDialog(null, "Stock not found");
+            return;
+        }
+
         Long buyQuantity = 0L;
         try {
             buyQuantity = Long.valueOf(txtBuyQuantity.getText().trim());
             if (buyQuantity <= 0 || buyQuantity > stock.getQuantity()) {
-                JOptionPane.showMessageDialog(null, "Invalid Input");
+                JOptionPane.showMessageDialog(null, "Buy quantity must be between 1 and " + stock.getQuantity());
                 return;
 
             }
@@ -271,6 +327,15 @@ public class BuyStockView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Invalid Input  " + e);
             return;
 
+        }
+
+        Double totalPrice = Math.round(buyQuantity * stock.getCurrentPrice() * 100) / 100.0;
+
+        User currentUser = userDao.findById(user.getId());
+
+        if (currentUser.getCashBalance() < totalPrice) {
+            JOptionPane.showMessageDialog(null, "Not enough cash. Total is " + totalPrice + " but your balance is " + currentUser.getCashBalance());
+            return;
         }
 
         Holding holding = holdingDao.findByUserIdAndStockId(user.getId(), stockId);
@@ -291,7 +356,7 @@ public class BuyStockView extends javax.swing.JFrame {
             transaction.setType(TransactionType.BUY);
             transaction.setQuantity(buyQuantity);
             transaction.setUnitPrice(stock.getCurrentPrice());
-            transaction.setTotalPrice(buyQuantity * transaction.getUnitPrice());
+            transaction.setTotalPrice(totalPrice);
             transaction.setCreatedAt(LocalDateTime.now());
 
             transactionDao.save(transaction);
@@ -315,9 +380,11 @@ public class BuyStockView extends javax.swing.JFrame {
             newHolding.setStockId(stockId);
             newHolding.setUserId(holding.getUserId());
 
-            newHolding.setQuantity(holding.getQuantity() + buyQuantity);
+            Long newQuantity = holding.getQuantity() + buyQuantity;
+            newHolding.setQuantity(newQuantity);
 
-            Double newPrice = holding.getAverageBuyPrice() * holding.getQuantity() + stock.getCurrentPrice() * buyQuantity;
+            Double newPrice = (holding.getAverageBuyPrice() * holding.getQuantity() + stock.getCurrentPrice() * buyQuantity) / newQuantity;
+            newPrice = Math.round(newPrice * 100) / 100.0;
 
             newHolding.setAverageBuyPrice(newPrice);
 
@@ -330,7 +397,7 @@ public class BuyStockView extends javax.swing.JFrame {
             transaction.setType(TransactionType.BUY);
             transaction.setQuantity(buyQuantity);
             transaction.setUnitPrice(stock.getCurrentPrice());
-            transaction.setTotalPrice(buyQuantity * transaction.getUnitPrice());
+            transaction.setTotalPrice(totalPrice);
             transaction.setCreatedAt(LocalDateTime.now());
 
             transactionDao.save(transaction);
@@ -348,6 +415,13 @@ public class BuyStockView extends javax.swing.JFrame {
             clearData();
 
         }
+
+        currentUser.setCashBalance(Math.round((currentUser.getCashBalance() - totalPrice) * 100) / 100.0);
+        userDao.update(currentUser);
+
+        user.setCashBalance(currentUser.getCashBalance());
+
+        JOptionPane.showMessageDialog(null, "Bought " + buyQuantity + " shares of " + stock.getCompanyName() + " for " + totalPrice);
 
         showStocks();
 

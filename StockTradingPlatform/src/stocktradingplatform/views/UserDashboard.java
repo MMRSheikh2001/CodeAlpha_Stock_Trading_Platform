@@ -6,6 +6,7 @@ package stocktradingplatform.views;
 
 import stocktradingplatform.db.HoldingDao;
 import stocktradingplatform.db.TransactionDao;
+import stocktradingplatform.models.TransactionType;
 import stocktradingplatform.models.User;
 import stocktradingplatform.views.user.BuyStockView;
 import stocktradingplatform.views.user.HoldingViewUser;
@@ -17,9 +18,9 @@ import stocktradingplatform.views.user.TransactionViewUser;
  * @author Administrator
  */
 public class UserDashboard extends javax.swing.JFrame {
-    
+
     private User user;
-    
+
     HoldingDao holdingDao = new HoldingDao();
     TransactionDao transactionDao = new TransactionDao();
 
@@ -28,13 +29,27 @@ public class UserDashboard extends javax.swing.JFrame {
      */
     public UserDashboard() {
         initComponents();
-        
+
+        addWindowFocusListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowGainedFocus(java.awt.event.WindowEvent e) {
+                initUserData();
+            }
+        });
+
     }
-    
+
     public UserDashboard(User user) {
         this.user = user;
         initComponents();
         initUserData();
+
+        addWindowFocusListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowGainedFocus(java.awt.event.WindowEvent e) {
+                initUserData();
+            }
+        });
     }
 
     /**
@@ -54,6 +69,12 @@ public class UserDashboard extends javax.swing.JFrame {
         txtTotalUserHoldings = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtTotalUserTransactions = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtTotalBought = new javax.swing.JTextField();
+        txtTotalSold = new javax.swing.JTextField();
+        txtTotalProfit = new javax.swing.JTextField();
         btnSellHolding = new javax.swing.JButton();
         btnAllHoldings = new javax.swing.JButton();
         btnAllTransactions = new javax.swing.JButton();
@@ -78,6 +99,18 @@ public class UserDashboard extends javax.swing.JFrame {
 
         txtTotalUserTransactions.setEditable(false);
 
+        jLabel4.setText("Total Bought");
+
+        jLabel5.setText("Total Sold");
+
+        jLabel6.setText("Total Profit");
+
+        txtTotalBought.setEditable(false);
+
+        txtTotalSold.setEditable(false);
+
+        txtTotalProfit.setEditable(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -86,6 +119,9 @@ public class UserDashboard extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
@@ -93,7 +129,10 @@ public class UserDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtTotalCashBalance)
                     .addComponent(txtTotalUserHoldings)
-                    .addComponent(txtTotalUserTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE))
+                    .addComponent(txtTotalUserTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                    .addComponent(txtTotalBought)
+                    .addComponent(txtTotalSold)
+                    .addComponent(txtTotalProfit))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -112,7 +151,19 @@ public class UserDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTotalUserTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 37, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtTotalBought, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtTotalSold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(txtTotalProfit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         btnSellHolding.setBackground(new java.awt.Color(255, 51, 0));
@@ -192,7 +243,7 @@ public class UserDashboard extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAllTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAllHoldings, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(btnLogout)
                 .addGap(22, 22, 22))
         );
@@ -205,7 +256,7 @@ public class UserDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         BuyStockView bsv = new BuyStockView(this.user);
         bsv.setVisible(true);
-        
+
 
     }//GEN-LAST:event_btnBuyStockMouseClicked
 
@@ -213,7 +264,7 @@ public class UserDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         SellHoldingView shv = new SellHoldingView(this.user);
         shv.setVisible(true);
-        
+
 
     }//GEN-LAST:event_btnSellHoldingMouseClicked
 
@@ -221,16 +272,16 @@ public class UserDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         HoldingViewUser hvu = new HoldingViewUser(this.user);
         hvu.setVisible(true);
-        
+
 
     }//GEN-LAST:event_btnAllHoldingsMouseClicked
 
     private void btnAllTransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAllTransactionsMouseClicked
         // TODO add your handling code here:
-        
+
         TransactionViewUser tvu = new TransactionViewUser(this.user);
         tvu.setVisible(true);
-        
+
 
     }//GEN-LAST:event_btnAllTransactionsMouseClicked
 
@@ -239,7 +290,7 @@ public class UserDashboard extends javax.swing.JFrame {
         LoginView lv = new LoginView();
         lv.setVisible(true);
         this.dispose();
-        
+
 
     }//GEN-LAST:event_btnLogoutMouseClicked
 
@@ -287,21 +338,37 @@ public class UserDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField txtTotalBought;
     private javax.swing.JTextField txtTotalCashBalance;
+    private javax.swing.JTextField txtTotalProfit;
+    private javax.swing.JTextField txtTotalSold;
     private javax.swing.JTextField txtTotalUserHoldings;
     private javax.swing.JTextField txtTotalUserTransactions;
     private javax.swing.JLabel txtWelcomeUser;
     // End of variables declaration//GEN-END:variables
 
     private void initUserData() {
-        
+
         if (this.user != null) {
             txtWelcomeUser.setText("Welcome , " + user.getUserName());
             txtTotalCashBalance.setText(user.getCashBalance() + "");
-            
+
             txtTotalUserHoldings.setText(holdingDao.countUserHoldings(user.getId()) + "");
             txtTotalUserTransactions.setText(transactionDao.countUserTransactions(user.getId()) + "");
+
+            double bought = transactionDao.getTotalAmount(user.getId(), TransactionType.BUY);
+            double sold = transactionDao.getTotalAmount(user.getId(), TransactionType.SELL);
+            double holdingsValue = holdingDao.getHoldingsValue(user.getId());
+
+            double profit = sold + holdingsValue - bought;
+
+            txtTotalBought.setText(String.format(java.util.Locale.US, "%.2f", bought));
+            txtTotalSold.setText(String.format(java.util.Locale.US, "%.2f", sold));
+            txtTotalProfit.setText(String.format(java.util.Locale.US, "%.2f", profit));
         }
     }
 }

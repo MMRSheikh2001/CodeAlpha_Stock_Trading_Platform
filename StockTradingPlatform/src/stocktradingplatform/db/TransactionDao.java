@@ -77,6 +77,31 @@ public class TransactionDao {
         return count;
     }
 
+    public double getTotalAmount(Long userId, TransactionType type) {
+
+        sql = "select coalesce(sum(totalPrice), 0) from transactions where userId = ? and type = ?";
+        double total = 0;
+
+        try {
+            ps = db.getCon().prepareStatement(sql);
+            ps.setLong(1, userId);
+            ps.setString(2, type.name());
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getDouble(1);
+            }
+
+            rs.close();
+            ps.close();
+            db.getCon().close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TransactionDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return total;
+    }
+
     public int countTransactions() {
         sql = "select count(*) from transactions";
 
